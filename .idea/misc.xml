@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout-land/item_movie.xml" value="0.146875" />
+        <entry key="app/src/main/res/layout-land/layout_land.xml" value="0.21958637469586376" />
+        <entry key="app/src/main/res/layout-land/less_popular.xml" value="0.16005291005291006" />
+        <entry key="app/src/main/res/layout-land/popular.xml" value="0.16005291005291006" />
+        <entry key="app/src/main/res/layout-land/viewholder_lesspopular.xml" value="0.25" />
+        <entry key="app/src/main/res/layout-land/viewholder_popular.xml" value="0.15208333333333332" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_movie.xml" value="0.21958637469586376" />
+        <entry key="app/src/main/res/layout/less.xml" value="0.1431159420289855" />
+        <entry key="app/src/main/res/layout/less_popular.xml" value="0.1431159420289855" />
+        <entry key="app/src/main/res/layout/popular.xml" value="0.1431159420289855" />
+        <entry key="app/src/main/res/layout/testo.xml" value="0.17" />
+        <entry key="app/src/main/res/layout/testo2.xml" value="0.21958637469586376" />
+        <entry key="app/src/main/res/layout/viewholder_lesspopular.xml" value="0.2208029197080292" />
+        <entry key="app/src/main/res/layout/viewholder_popular.xml" value="0.12771739130434784" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2208029197080292" />
+      </ProjectState>
+    </option>
+  </component>
+</project>
