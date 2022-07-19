@@ -2,18 +2,27 @@ package com.example.flixster.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.flixster.DetailActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcel;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -80,6 +89,20 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 .error(R.drawable.not_found)
                 .into(vh1.getiPoster());
 
+        // Register the click on the whole row
+        vh1.container1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(context, movie.getTitle(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(context, DetailActivity.class);
+                i.putExtra("title", movie.getTitle());
+                i.putExtra("movie", Parcels.wrap(movie));
+                context.startActivity(i);
+
+            }
+        });
+
     }
 
     // Configure the second ViewHolder (popular movie)
@@ -89,6 +112,21 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 .placeholder(R.drawable.loading2)
                 .error(R.drawable.not_found)
                     .into(vh2.getBackdropPath());
+
+        // Register the click on the whole row
+        vh2.container2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(context, movie.getTitle(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(context, DetailActivity.class);
+                i.putExtra("title", movie.getTitle());
+                i.putExtra("movie", Parcels.wrap(movie));
+                context.startActivity(i);
+
+            }
+        });
+
     }
 
 
@@ -114,6 +152,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView tvTitle;
         TextView tvOverView;
         ImageView iPoster;
+        RelativeLayout container1;
 
         public TextView getTvTitle() {
             return tvTitle;
@@ -127,11 +166,17 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             return iPoster;
         }
 
+        public RelativeLayout getContainer1() {
+            return container1;
+        }
+
+
         public ViewHolder1(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.txtTitle);
             tvOverView = itemView.findViewById(R.id.txtOverView);
             iPoster = itemView.findViewById(R.id.imgPoster);
+            container1 = itemView.findViewById(R.id.container1);
         }
     }
 
@@ -139,15 +184,21 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     // ViewHolder layout files for popular movies
     public static class ViewHolder2 extends RecyclerView.ViewHolder {
         ImageView backdropPath;
+        RelativeLayout container2;
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
             backdropPath = itemView.findViewById(R.id.imgBackdropPath);
+            container2 = itemView.findViewById(R.id.container2);
         }
 
         public ImageView getBackdropPath() {
             return backdropPath;
         }
+        public RelativeLayout getContainer2() {
+            return container2;
+        }
+
     }
 
 }
