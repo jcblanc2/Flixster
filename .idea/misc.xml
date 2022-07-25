@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/relativelayout_radius_border.xml" value="0.1565" />
+        <entry key="app/src/main/res/drawable/s.xml" value="0.1565" />
         <entry key="app/src/main/res/layout-land/item_movie.xml" value="0.146875" />
         <entry key="app/src/main/res/layout-land/layout_land.xml" value="0.21958637469586376" />
         <entry key="app/src/main/res/layout-land/less_popular.xml" value="0.16005291005291006" />
@@ -15,6 +17,7 @@
         <entry key="app/src/main/res/layout/less.xml" value="0.1431159420289855" />
         <entry key="app/src/main/res/layout/less_popular.xml" value="0.1431159420289855" />
         <entry key="app/src/main/res/layout/popular.xml" value="0.1431159420289855" />
+        <entry key="app/src/main/res/layout/relativelayout_radius_border.xml" value="0.16394927536231885" />
         <entry key="app/src/main/res/layout/testo.xml" value="0.17" />
         <entry key="app/src/main/res/layout/testo2.xml" value="0.21958637469586376" />
         <entry key="app/src/main/res/layout/viewholder_lesspopular.xml" value="0.2208029197080292" />

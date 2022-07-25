@@ -1,25 +1,21 @@
 package com.example.flixster;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.flixster.databinding.ActivityDetailBinding;
 import com.example.flixster.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.parceler.Parcel;
 import org.parceler.Parcels;
-
 import okhttp3.Headers;
 
 public class DetailActivity extends YouTubeBaseActivity {
@@ -30,17 +26,20 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView txTitle;
     TextView txOverView;
     RatingBar rBar;
-    YouTubePlayerView youTubePlayerView;
+    public static YouTubePlayerView youTubePlayerView;
+    private ActivityDetailBinding binding_detail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        binding_detail = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        txTitle = findViewById(R.id.txtViewTitle);
-        txOverView = findViewById(R.id.overViewTxt);
-        rBar = findViewById(R.id.ratingBar);
-        youTubePlayerView = findViewById(R.id.player);
+        txTitle = binding_detail.txtViewTitle;
+        txOverView = binding_detail.overViewTxt;
+        rBar = binding_detail.ratingBar;
+        youTubePlayerView = binding_detail.player;
 
         String title = getIntent().getStringExtra("title");
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
@@ -49,8 +48,12 @@ public class DetailActivity extends YouTubeBaseActivity {
         txOverView.setText(movie.getOverView());
         rBar.setRating((float) movie.getVoteAverage());
 
+        query_MovieTrailer(VIDEO_URL, movie);
+    }
+
+    public static void query_MovieTrailer(String VideoUrl, Movie movie){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(String.format(VIDEO_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
+        client.get(String.format(VideoUrl, movie.getMovieId()), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 try {
@@ -61,7 +64,7 @@ public class DetailActivity extends YouTubeBaseActivity {
                     }
                     String youtubeKey = result.getJSONObject(0).getString("key");
                     Log.d(TAG, youtubeKey);
-                    initializeYoutube(youtubeKey);
+                    initializeYoutube(youtubeKey, movie.getVoteAverage());
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json ", e);
                 }
@@ -72,17 +75,18 @@ public class DetailActivity extends YouTubeBaseActivity {
 
             }
         });
-
-
-
     }
 
-    private void initializeYoutube(String youtubeKey) {
+    private static void initializeYoutube(String youtubeKey, double vote) {
         youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d(TAG, "onInitializationSuccess");
-                youTubePlayer.cueVideo(youtubeKey);
+                if (vote > 5){
+                    youTubePlayer.loadVideo(youtubeKey);
+                }else {
+                    youTubePlayer.cueVideo(youtubeKey);
+                }
             }
 
             @Override

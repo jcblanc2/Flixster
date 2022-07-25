@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-    <ImageView
-        android:id="@+id/imgBackdropPath"
+<layout>
+    <data>
+        <variable
+            name="movie"
+            type="com.example.flixster.models.Movie"/>
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="-6dp"
-        android:layout_marginTop="3dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@+id/imgBackdropPath" />
+        android:layout_height="wrap_content">
 
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/imgBackdropPath"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:transitionName="profile"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/PreviewPlayButton"
+            android:layout_width="320dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play2"
+            app:srcCompat="@drawable/ic_play2" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@+id/imgBackdropPath" />
+    </RelativeLayout>
+</layout>
+
+
