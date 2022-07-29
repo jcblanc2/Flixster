@@ -1,6 +1,16 @@
 package com.example.flixster.models;
 
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.flixster.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +27,7 @@ public class Movie {
     private String posterPath, title, overView, backdropPath;
     private int movieId;
     private double voteAverage;
+    public static Context context;
 
     // empty constructor needed by the Parceler library
     public Movie(){
@@ -43,13 +54,9 @@ public class Movie {
         return listMovies;
     }
 
-    public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", this.posterPath);
-    }
+    public String getPosterPath() {return String.format("https://image.tmdb.org/t/p/w342/%s", this.posterPath);}
 
-    public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", this.backdropPath);
-    }
+    public String getBackdropPath() {return String.format("https://image.tmdb.org/t/p/w342/%s", this.backdropPath);}
 
     public String getTitle() {
         return title;
@@ -66,7 +73,6 @@ public class Movie {
     public double getVoteAverage() {
         return voteAverage;
     }
-
 }
 
 

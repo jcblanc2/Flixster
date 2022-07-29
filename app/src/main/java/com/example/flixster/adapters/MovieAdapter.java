@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -25,7 +27,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    Context context;
+    public static Context context;
     List<Movie> movies;
     public static final String TAG = "MovieAdapter";
     public static final int popular = 1;
@@ -78,36 +80,21 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // Configure the first ViewHolder (Less popular movie)
     private void configureViewHolder1(ViewHolder1 vh1, int position) {
         Movie movie = (Movie) movies.get(position);
-        String imgUrl;
 
-        vh1.binding_less_popular.txtTitle.setText(movie.getTitle());
-        vh1.binding_less_popular.txtOverView.setText(movie.getOverView());
+        vh1.binding_less_popular.setMovie(movie);
+        vh1.binding_less_popular.executePendingBindings();
 
-        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            imgUrl = movie.getBackdropPath();
-        }else {
-            imgUrl = movie.getPosterPath();
-        }
-
-        Glide.with(context).load(imgUrl)
-                .transform(new RoundedCorners(45))
-                .placeholder(R.drawable.iconmonstr)
-                .error(R.drawable.not_found)
-                .into(vh1.binding_less_popular.imgPoster);
-
-        final View img = vh1.binding_less_popular.imgPoster;
 //      Register the click on the whole row
         vh1.binding_less_popular.container1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(context, DetailActivity.class);
-                i.putExtra("title", movie.getTitle());
                 i.putExtra("movie", Parcels.wrap(movie));
 
 
                 ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation((Activity) context, img, "profile");
+                        .makeSceneTransitionAnimation((Activity) context, vh1.binding_less_popular.imgPoster, "profile");
                 // start the new activity
                 context.startActivity(i, options.toBundle());
             }
@@ -119,27 +106,19 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void configureViewHolder2(Viewholder2 vh2, int position) {
         Movie movie = (Movie) movies.get(position);
 
-        Glide.with(context).load(movie.getBackdropPath())
-                .centerCrop()
-                .transform(new RoundedCorners(45))
-                .placeholder(R.drawable.iconmonstr)
-                .error(R.drawable.not_found)
-                .into(vh2.binding_popular.imgBackdropPath);
+        vh2.binding_popular.setMovie(movie);
+        vh2.binding_popular.executePendingBindings();
 
-
-
-        final View img = vh2.itemView.findViewById(R.id.imgBackdropPath);
         // Register the click on the whole row
         vh2.binding_popular.container2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailActivity.class);
-                i.putExtra("title", movie.getTitle());
                 i.putExtra("movie", Parcels.wrap(movie));
 
 
                 ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation((Activity) context, img, "profile");
+                        .makeSceneTransitionAnimation((Activity) context, vh2.binding_popular.imgBackdrop, "profile");
                 // start the new activity
                 context.startActivity(i, options.toBundle());
 
@@ -157,7 +136,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemViewType(int position) {
         // Check the vote_average
         int type;
-        if (movies.get(position).getVoteAverage() <= 5) {
+        if (movies.get(position).getVoteAverage() <= 7) {
             type = lessPopular;
         } else{
             type = popular;
@@ -183,6 +162,31 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public Viewholder2(@NonNull ViewholderPopularBinding binding_popular) {
             super(binding_popular.getRoot());
             this.binding_popular = binding_popular;
+        }
+    }
+
+
+    // Helper class to load image (DataBinding)
+    public static class BindingAdapterUtils {
+        @BindingAdapter({"imageUrlPopular"})
+        public static void loadImage(ImageView view, String imgUrl) {
+            Glide.with(context).load(imgUrl)
+                    .centerCrop()
+                    .transform(new RoundedCorners(80))
+                    .placeholder(R.drawable.iconmonstr)
+                    .error(R.drawable.ic_play23)
+                    .into(view);
+        }
+
+
+        @BindingAdapter({"imageUrlLessPopular"})
+        public static void loadImage1(ImageView view, String imgUrl) {
+            Glide.with(context).load(imgUrl)
+                    .centerCrop()
+                    .transform(new RoundedCorners(80))
+                    .placeholder(R.drawable.iconmonstr)
+                    .error(R.drawable.ic_play23)
+                    .into(view);
         }
     }
 

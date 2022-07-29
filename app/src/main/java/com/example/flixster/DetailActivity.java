@@ -23,9 +23,6 @@ public class DetailActivity extends YouTubeBaseActivity {
     private static final String TAG = "DetailActivity";
     public static final String VIDEO_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    TextView txTitle;
-    TextView txOverView;
-    RatingBar rBar;
     public static YouTubePlayerView youTubePlayerView;
     private ActivityDetailBinding binding_detail;
 
@@ -35,25 +32,15 @@ public class DetailActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         binding_detail = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-
-        txTitle = binding_detail.txtViewTitle;
-        txOverView = binding_detail.overViewTxt;
-        rBar = binding_detail.ratingBar;
         youTubePlayerView = binding_detail.player;
 
-        String title = getIntent().getStringExtra("title");
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
-        txTitle.setText(title);
-        txOverView.setText(movie.getOverView());
-        rBar.setRating((float) movie.getVoteAverage());
+        binding_detail.setMovie(movie);
+        binding_detail.executePendingBindings();
 
-        query_MovieTrailer(VIDEO_URL, movie);
-    }
-
-    public static void query_MovieTrailer(String VideoUrl, Movie movie){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(String.format(VideoUrl, movie.getMovieId()), new JsonHttpResponseHandler() {
+        client.get(String.format(VIDEO_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 try {
@@ -77,12 +64,13 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
+
     private static void initializeYoutube(String youtubeKey, double vote) {
         youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d(TAG, "onInitializationSuccess");
-                if (vote > 5){
+                if (vote >= 7){
                     youTubePlayer.loadVideo(youtubeKey);
                 }else {
                     youTubePlayer.cueVideo(youtubeKey);

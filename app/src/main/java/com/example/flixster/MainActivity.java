@@ -48,45 +48,25 @@ public class MainActivity extends AppCompatActivity {
         rcView.setLayoutManager(new LinearLayoutManager(this));
 
         // Query to get list movie
-//        client.get(nowPlayingUrl, new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Headers headers, JSON json) {
-//                Log.e(TAG, "onSuccess");
-//                JSONObject jsonObject = json.jsonObject;
-//                try {
-//                    JSONArray result = jsonObject.getJSONArray("results");
-//                    Log.i(TAG, "Result: " + result.toString());
-//                    movies.addAll(Movie.fromJsonArray(result));
-//                    adapter.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//                    Log.i(TAG, "Hit JSONException: " + e);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-//                Log.e(TAG, "onFailure");
-//            }
-//        });
+        client.get(nowPlayingUrl, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.e(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray result = jsonObject.getJSONArray("results");
+                    Log.i(TAG, "Result: " + result.toString());
+                    movies.addAll(Movie.fromJsonArray(result));
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.i(TAG, "Hit JSONException: " + e);
+                }
+            }
 
-
-        StringBuilder responseStrBuilder = new StringBuilder();;
-        try {
-            InputStream inputStream = getAssets().open("movies.txt");
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-
-            String inputStr;
-            while ((inputStr = streamReader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
-
-            JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
-            JSONArray results = jsonObject.getJSONArray("results");
-
-            movies.addAll( Movie.fromJsonArray(results));
-            adapter.notifyDataSetChanged();
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            Log.i(TAG, "onCreate: " + responseStrBuilder.toString());
-        }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure");
+            }
+        });
     }
 }
