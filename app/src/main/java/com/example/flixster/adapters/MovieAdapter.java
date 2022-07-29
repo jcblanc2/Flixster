@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.example.flixster.R;
 import com.example.flixster.databinding.ViewholderLesspopularBinding;
 import com.example.flixster.databinding.ViewholderPopularBinding;
 import com.example.flixster.models.Movie;
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 import java.util.List;
 
@@ -136,7 +134,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemViewType(int position) {
         // Check the vote_average
         int type;
-        if (movies.get(position).getVoteAverage() <= 7) {
+        if (movies.get(position).getVoteAverage() < 5) {
             type = lessPopular;
         } else{
             type = popular;
@@ -172,7 +170,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public static void loadImage(ImageView view, String imgUrl) {
             Glide.with(context).load(imgUrl)
                     .centerCrop()
-                    .transform(new RoundedCorners(80))
+                    .transform(new RoundedCorners(150))
                     .placeholder(R.drawable.iconmonstr)
                     .error(R.drawable.ic_play23)
                     .into(view);
@@ -183,7 +181,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public static void loadImage1(ImageView view, String imgUrl) {
             Glide.with(context).load(imgUrl)
                     .centerCrop()
-                    .transform(new RoundedCorners(80))
+                    .transform(new RoundedCorners(100))
                     .placeholder(R.drawable.iconmonstr)
                     .error(R.drawable.ic_play23)
                     .into(view);

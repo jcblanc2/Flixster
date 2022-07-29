@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/container2"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="30dp"
         app:cardElevation="9dp"
         android:layout_marginTop="-15dp"
         android:background="@color/black_gray">
@@ -26,6 +26,15 @@
             app:imageUrlLessPopular="@{movie.backdropPath}"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_play2" />
 
     </androidx.cardview.widget.CardView>
 </layout>

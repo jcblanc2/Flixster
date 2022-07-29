@@ -3,8 +3,6 @@ package com.example.flixster;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixster.databinding.ActivityDetailBinding;
@@ -70,7 +68,7 @@ public class DetailActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d(TAG, "onInitializationSuccess");
-                if (vote >= 7){
+                if (vote > 5){
                     youTubePlayer.loadVideo(youtubeKey);
                 }else {
                     youTubePlayer.cueVideo(youtubeKey);
