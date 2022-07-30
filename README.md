@@ -19,7 +19,7 @@
 
 ### App Walkthough GIF
 
-<img src="walkthrough2 .gif" width=250><br>
+<img src="flixster.gif" width=250><br>
 
 ### Notes
 
